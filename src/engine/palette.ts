@@ -1,0 +1,20 @@
+/** Colour tokens of the design system. Model code names a token; the design system resolves its colour. */
+export type PaletteToken =
+  | 'ink'
+  | 'inkSoft'
+  | 'inkMuted'
+  | 'paper'
+  | 'cream'
+  | 'surface'
+  | 'line'
+  | 'mint'
+  | 'mintDark'
+  | 'mintPale'
+  | 'amber'
+  | 'amberDeep'
+  | 'amberPale'
+  | 'coral'
+  | 'coralDeep'
+  | 'coralPale'
+  | 'lavender'
+  | 'lavenderPale';

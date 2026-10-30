@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-right: env(safe-area-inset-right, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-left: env(safe-area-inset-left, 0px);
+    --tab-bar-height: 49px;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    /* The app draws its own pull-to-refresh (PeekingLuka), so the browser's must not reload the page. */
+    overscroll-behavior-y: none;
+    @apply bg-paper;
+  }
+
+  body {
+    min-height: 100dvh;
+    @apply bg-paper font-sans text-ink antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.mintDark');
+    outline-offset: 2px;
+  }
+
+  img,
+  video {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+
+  a,
+  button,
+  [role='button'],
+  [role='tab'],
+  [role='radio'],
+  [role='switch'],
+  [role='slider'] {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+  }
+}
+
+@layer components {
+  /** Inset separators between ListSection rows, starting where the row text starts. */
+  .list-rows > * + *::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 16px;
+    right: 0;
+    border-top: 1px solid theme('colors.line');
+  }
+}
+
+@layer utilities {
+  /** Room for the phone tab bar and the home indicator under it. */
+  .pb-tab-bar {
+    padding-bottom: calc(var(--tab-bar-height) + var(--safe-bottom));
+  }
+
+  .pt-safe {
+    padding-top: var(--safe-top);
+  }
+
+  .pb-safe {
+    padding-bottom: var(--safe-bottom);
+  }
+
+  .px-safe {
+    padding-left: var(--safe-left);
+    padding-right: var(--safe-right);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  /** Pressed state of iOS buttons: dims and shrinks slightly (AlgiButtonAppearance). */
+  .pressable {
+    transition:
+      transform 150ms ease-out,
+      opacity 150ms ease-out;
+  }
+
+  .pressable:active:not(:disabled):not([aria-disabled='true']) {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+
+  .pressable-dim {
+    transition: opacity 150ms ease-out;
+  }
+
+  .pressable-dim:active:not(:disabled):not([aria-disabled='true']) {
+    opacity: 0.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

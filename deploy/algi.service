@@ -1,0 +1,21 @@
+[Unit]
+Description=Algi server (TBC Open Banking + AI coach)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=azureuser
+WorkingDirectory=/opt/algi
+Environment=NODE_ENV=production
+Environment=STATIC_DIR=/var/www/algi
+# Secrets (TBC certificate paths, client ID, ANTHROPIC_API_KEY, PUBLIC_BASE_URL) live in /etc/algi/algi.env, mode 600.
+ExecStart=/usr/bin/node --env-file-if-exists=/etc/algi/algi.env server/index.ts
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ReadOnlyPaths=/opt/algi /etc/algi
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

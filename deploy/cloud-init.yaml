@@ -1,0 +1,15 @@
+#cloud-config
+package_update: true
+packages:
+  - nginx
+  - certbot
+  - python3-certbot-nginx
+  - ca-certificates
+  - curl
+runcmd:
+  # Node 24 runs the server's TypeScript directly (type stripping needs Node 23.6+).
+  - curl -fsSL https://deb.nodesource.com/setup_24.x | bash -
+  - apt-get install -y nodejs
+  - mkdir -p /var/www/algi /opt/algi /etc/algi
+  - echo '<!doctype html><meta charset="utf-8"><title>Algi</title><p>Algi - deploying...</p>' > /var/www/algi/index.html
+  - systemctl enable --now nginx
